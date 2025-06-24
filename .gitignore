@@ -1,0 +1,7 @@
+# Carpetas que no deben subirse
+bin/
+obj/
+.vs/
+*.user
+*.suo
+*.db
