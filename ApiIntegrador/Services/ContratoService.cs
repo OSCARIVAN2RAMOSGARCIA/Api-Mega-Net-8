@@ -78,6 +78,7 @@ namespace ApiIntegrador.Services
             {
                 Nombre = contrato.Suscriptor?.Nombre ?? "Sin nombre",
                 Paquete = contrato.Paquete?.Nombre ?? "Sin paquete",
+                TipoContrato = contrato.TipoContrato ?? "Desconocido",
                 PrecioOriginal = precioBase,
                 Descuento = totalDescuento,
                 DescripcionPromocion = string.Join(", ", promocionesValidas.Select(p => p.Promocion!.Nombre)),
@@ -141,7 +142,7 @@ namespace ApiIntegrador.Services
                     promocionesDetalles.Add(new PromocionDetalleDTO
                     {
                         Nombre = pa.Promocion!.Nombre,
-                        DescuentoAplicado =monto,
+                        DescuentoAplicado = monto,
                         FechaInicio = pa.FechaAplicacion,
                         FechaFin = fechaFin,
                         DiasDuracion = (fechaFin - pa.FechaAplicacion).Days
@@ -152,6 +153,7 @@ namespace ApiIntegrador.Services
                 {
                     Nombre = contrato.Suscriptor?.Nombre ?? "Sin nombre",
                     Paquete = contrato.Paquete?.Nombre ?? "Sin paquete",
+                    TipoContrato = contrato.TipoContrato ?? "Desconocido",
                     PrecioOriginal = precioBase,
                     Descuento = totalDescuento,
                     DescripcionPromocion = string.Join(", ", promocionesValidas.Select(p => p.Promocion!.Nombre)),
