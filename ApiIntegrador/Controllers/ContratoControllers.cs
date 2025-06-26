@@ -10,28 +10,30 @@ namespace ApiIntegrador.Controllers
     [Route("api/[controller]")]
     public class ContratoController : ControllerBase
     {
-        private readonly ContratoService _service;
+       private readonly ContratoService _contratoService;
 
-        public ContratoController(ContratoService service)
+        public ContratoController(ContratoService contratoService)
         {
-            _service = service;
+            _contratoService = contratoService;
         }
 
-        // GET api/contrato/{idSuscriptor}/pago
+        // Obtener pago mensual de un suscriptor específico
         [HttpGet("{idSuscriptor}/pago")]
-        public async Task<ActionResult<SuscriptorPagoDTO>> GetPagoMensual(int idSuscriptor)
+        public async Task<ActionResult<SuscriptorPagoDTO>> ObtenerPago(int idSuscriptor)
         {
-            var pago = await _service.CalcularPagoMensualAsync(idSuscriptor);
-            if (pago == null) return NotFound();
-            return Ok(pago);
+            var resultado = await _contratoService.CalcularPagoMensualAsync(idSuscriptor);
+            if (resultado == null)
+                return NotFound();
+
+            return Ok(resultado);
         }
 
-        // GET api/contrato/pagos
+        // Obtener pagos de todos los suscriptores
         [HttpGet("pagos")]
-        public async Task<ActionResult<List<SuscriptorPagoDTO>>> GetPagosMensuales()
+        public async Task<ActionResult<List<SuscriptorPagoDTO>>> ObtenerTodosLosPagos()
         {
-            var pagos = await _service.CalcularPagosMensualesAsync();
-            return Ok(pagos);
+            var lista = await _contratoService.CalcularPagosMensualesAsync();
+            return Ok(lista);
         }
     }
 }

@@ -32,19 +32,13 @@ namespace ApiIntegrador.Services
 
             if (contrato == null) return null;
 
-            // Elegir precio según tipo de contrato
-            decimal precioBase = 0m;
-            if (contrato.TipoContrato?.ToLower() == "empresarial")
-            {
-                precioBase = contrato.Paquete?.PaqueteServicios.Sum(ps => ps.Servicio.PrecioEmpresarial) ?? 0m;
-            }
-            else
-            {
-                precioBase = contrato.Paquete?.PaqueteServicios.Sum(ps => ps.Servicio.PrecioResidencial) ?? 0m;
-            }
+            decimal precioBase = contrato.TipoContrato?.ToLower() == "empresarial"
+                ? contrato.Paquete?.PaqueteServicios.Sum(ps => ps.Servicio.PrecioEmpresarial) ?? 0
+                : contrato.Paquete?.PaqueteServicios.Sum(ps => ps.Servicio.PrecioResidencial) ?? 0;
 
             decimal totalDescuento = 0m;
             List<string> porcentajes = new();
+            List<PromocionDetalleDTO> promocionesDetalles = new();
 
             var promocionesValidas = contrato.PromocionesAplicadas
                 .Where(pa =>
@@ -57,6 +51,8 @@ namespace ApiIntegrador.Services
             foreach (var pa in promocionesValidas)
             {
                 var monto = pa.DescuentoAplicado;
+                DateTime fechaFin = pa.FechaTermino ?? pa.Promocion!.VigenciaHasta;
+
                 if (monto > 0 && monto < 1m)
                 {
                     totalDescuento += precioBase * monto;
@@ -65,8 +61,17 @@ namespace ApiIntegrador.Services
                 else if (monto >= 1m)
                 {
                     totalDescuento += monto;
-                    porcentajes.Add(monto.ToString("C")); // muestra como moneda
+                    porcentajes.Add(monto.ToString("C"));
                 }
+
+                promocionesDetalles.Add(new PromocionDetalleDTO
+                {
+                    Nombre = pa.Promocion!.Nombre,
+                    DescuentoAplicado = monto,
+                    FechaInicio = pa.FechaAplicacion,
+                    FechaFin = fechaFin,
+                    DiasDuracion = (fechaFin - pa.FechaAplicacion).Days
+                });
             }
 
             return new SuscriptorPagoDTO
@@ -77,7 +82,8 @@ namespace ApiIntegrador.Services
                 Descuento = totalDescuento,
                 DescripcionPromocion = string.Join(", ", promocionesValidas.Select(p => p.Promocion!.Nombre)),
                 TotalAPagar = System.Math.Max(0, precioBase - totalDescuento),
-                PorcentajeAplicado = string.Join(", ", porcentajes)
+                PorcentajeAplicado = string.Join(", ", porcentajes),
+                PromocionesDetalles = promocionesDetalles
             };
         }
 
@@ -100,18 +106,13 @@ namespace ApiIntegrador.Services
 
             foreach (var contrato in contratos)
             {
-                decimal precioBase = 0m;
-                if (contrato.TipoContrato?.ToLower() == "empresarial")
-                {
-                    precioBase = contrato.Paquete?.PaqueteServicios.Sum(ps => ps.Servicio.PrecioEmpresarial) ?? 0m;
-                }
-                else
-                {
-                    precioBase = contrato.Paquete?.PaqueteServicios.Sum(ps => ps.Servicio.PrecioResidencial) ?? 0m;
-                }
+                decimal precioBase = contrato.TipoContrato?.ToLower() == "empresarial"
+                    ? contrato.Paquete?.PaqueteServicios.Sum(ps => ps.Servicio.PrecioEmpresarial) ?? 0
+                    : contrato.Paquete?.PaqueteServicios.Sum(ps => ps.Servicio.PrecioResidencial) ?? 0;
 
                 decimal totalDescuento = 0m;
                 List<string> porcentajes = new();
+                List<PromocionDetalleDTO> promocionesDetalles = new();
 
                 var promocionesValidas = contrato.PromocionesAplicadas
                     .Where(pa =>
@@ -124,6 +125,8 @@ namespace ApiIntegrador.Services
                 foreach (var pa in promocionesValidas)
                 {
                     var monto = pa.DescuentoAplicado;
+                    DateTime fechaFin = pa.FechaTermino ?? pa.Promocion!.VigenciaHasta;
+
                     if (monto > 0 && monto < 1m)
                     {
                         totalDescuento += precioBase * monto;
@@ -134,6 +137,15 @@ namespace ApiIntegrador.Services
                         totalDescuento += monto;
                         porcentajes.Add(monto.ToString("C"));
                     }
+
+                    promocionesDetalles.Add(new PromocionDetalleDTO
+                    {
+                        Nombre = pa.Promocion!.Nombre,
+                        DescuentoAplicado =monto,
+                        FechaInicio = pa.FechaAplicacion,
+                        FechaFin = fechaFin,
+                        DiasDuracion = (fechaFin - pa.FechaAplicacion).Days
+                    });
                 }
 
                 listaPagos.Add(new SuscriptorPagoDTO
@@ -144,7 +156,8 @@ namespace ApiIntegrador.Services
                     Descuento = totalDescuento,
                     DescripcionPromocion = string.Join(", ", promocionesValidas.Select(p => p.Promocion!.Nombre)),
                     TotalAPagar = System.Math.Max(0, precioBase - totalDescuento),
-                    PorcentajeAplicado = string.Join(", ", porcentajes)
+                    PorcentajeAplicado = string.Join(", ", porcentajes),
+                    PromocionesDetalles = promocionesDetalles
                 });
             }
 
