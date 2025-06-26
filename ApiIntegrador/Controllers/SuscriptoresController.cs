@@ -7,38 +7,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ApiIntegrador.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
-    public class SuscriptoresController : ControllerBase
+[Route("api/[controller]")]
+public class SuscriptoresController : ControllerBase
+{
+    private readonly SuscriptorService _suscriptorService;
+
+    public SuscriptoresController(SuscriptorService suscriptorService)
     {
-        private readonly AppDbContext _context;
-        private readonly IMapper _mapper;
-
-        public SuscriptoresController(AppDbContext context, IMapper mapper)
-        {
-            _context = context;
-            _mapper = mapper;
-        }
-
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<SuscriptorDto>>> GetSuscriptores()
-        {
-            var suscriptores = await _context.Suscriptores
-                .Include(c => c.Colonia)
-                .ThenInclude(col => col.Ciudad)
-                .ToListAsync();
-
-            var suscriptoresDto = suscriptores.Select(x => new SuscriptorDto
-            {
-                IdSuscriptor = x.IdSuscriptor,
-                Nombre = x.Nombre,
-                IdColonia = x.IdColonia,
-                ColoniaNombre = x.Colonia.Nombre, // Cambiado de NombreColonia a Nombre
-                CiudadNombre = x.Colonia.Ciudad.Nombre, // Cambiado de NombreCiudad a Nombre
-                FechaRegistro = x.FechaRegistro
-            }).ToList();
-
-            return Ok(suscriptoresDto);
-        }
+        _suscriptorService = suscriptorService;
     }
+
+    [HttpGet("{id}/detalle")]
+    public async Task<ActionResult<DetalleSuscriptorDTO>> ObtenerDetalle(int id)
+    {
+        var resultado = await _suscriptorService.ObtenerDetalleAsync(id);
+        if (resultado == null)
+            return NotFound(new { mensaje = $"No se encontró el suscriptor con ID {id} o no tiene contrato activo." });
+
+        return Ok(resultado);
+    }
+}
+
 }
