@@ -17,29 +17,22 @@ builder.Services.AddScoped<ContratoService>();
 builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
 
+// Swagger
+builder.Services.AddSwaggerGen();
 // Controllers
 builder.Services.AddControllers();
-
-// Swagger
-
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
-{
-    c.SwaggerDoc("v1", new() { Title = "YourProject API", Version = "v1" });
-    
-});
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment()) // Solo muestra Swagger en desarrollo
 {
     app.UseSwagger();
-    app.UseSwaggerUI(c => 
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "YourProject API V1");
-    });
+    app.UseSwaggerUI();
 }
+// swagger 
+// http://localhost:5243/swagger/index.html
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
