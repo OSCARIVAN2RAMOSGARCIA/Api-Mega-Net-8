@@ -1,4 +1,5 @@
 using ApiIntegrador.Data;
+using ApiIntegrador.Models;
 using ApiIntegrador.Dto;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;

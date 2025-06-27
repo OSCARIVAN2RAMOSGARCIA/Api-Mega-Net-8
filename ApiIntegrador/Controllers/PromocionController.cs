@@ -1,8 +1,11 @@
-using ApiIntegrador.Dto;
 using ApiIntegrador.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ApiIntegrador.Models;
+using ApiIntegrador.Dto;
+using ApiIntegrador.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace ApiIntegrador.Controllers
 {

@@ -1,7 +1,10 @@
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
 namespace ApiIntegrador.Models
 {
 public class Servicio
-{
+{   [Key] // 👈 CLAVE PRIMARIA
     public int IdServicio { get; set; }
     public string Nombre { get; set; } = string.Empty;
     public decimal PrecioResidencial { get; set; }

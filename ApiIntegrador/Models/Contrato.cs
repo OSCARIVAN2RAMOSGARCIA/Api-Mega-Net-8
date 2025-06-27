@@ -1,7 +1,10 @@
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
 namespace ApiIntegrador.Models
 {
 public class Contrato
-{
+{   [Key] // 👈 CLAVE PRIMARIA
     public int IdContrato { get; set; }
     public int IdSuscriptor { get; set; }
     public int IdPaquete { get; set; }

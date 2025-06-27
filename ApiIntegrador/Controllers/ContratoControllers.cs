@@ -1,8 +1,8 @@
 using ApiIntegrador.Dto;
-using ApiIntegrador.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using ApiIntegrador.Services;
 
 namespace ApiIntegrador.Controllers
 {
@@ -10,7 +10,7 @@ namespace ApiIntegrador.Controllers
     [Route("api/[controller]")]
     public class ContratoController : ControllerBase
     {
-       private readonly ContratoService _contratoService;
+        private readonly ContratoService _contratoService;
 
         public ContratoController(ContratoService contratoService)
         {
@@ -34,6 +34,17 @@ namespace ApiIntegrador.Controllers
         {
             var lista = await _contratoService.CalcularPagosMensualesAsync();
             return Ok(lista);
+        }
+
+        // ✅ Obtener deuda total de un suscriptor (nuevo endpoint)
+        [HttpGet("{idSuscriptor}/deuda")]
+        public async Task<ActionResult<SuscriptorDeudaDTO>> ObtenerDeuda(int idSuscriptor)
+        {
+            var resultado = await _contratoService.CalcularDeudaTotalAsync(idSuscriptor);
+            if (resultado == null)
+                return NotFound();
+
+            return Ok(resultado);
         }
     }
 }
