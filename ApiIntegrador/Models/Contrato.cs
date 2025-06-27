@@ -8,9 +8,11 @@ public class Contrato
     public DateTime FechaInicio { get; set; }
     public DateTime? FechaTermino { get; set; }
     public bool Activo { get; set; } = true;
-    public string TipoContrato { get; set; } // "Residencial", "Empresarial"
-    public Suscriptor Suscriptor { get; set; }
-    public Paquete Paquete { get; set; }
-    public ICollection<PromocionAplicada> PromocionesAplicadas { get; set; }
+    public string TipoContrato { get; set; } = string.Empty; // "Residencial", "Empresarial"
+    
+    public Suscriptor Suscriptor { get; set; } = null!;
+    public Paquete Paquete { get; set; } = null!;
+    public ICollection<PromocionAplicada> PromocionesAplicadas { get; set; } = new List<PromocionAplicada>();
 }
+
 }
