@@ -1,0 +1,35 @@
+<h2>Listado de Promociones</h2>
+
+<div>
+<label>Tipo Servicio:
+  <select [(ngModel)]="filtro.tipoServicio">
+    <option value="ambos">Todos</option>
+    <option value="residencial">Residencial</option>
+    <option value="empresarial">Empresarial</option>
+  </select>
+</label>
+<button (click)="listar()">Buscar</button>
+</div>
+
+<div *ngIf="promociones.length > 0">
+  <h3>Resultados:</h3>
+  <div *ngFor="let promo of promociones" style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+    <p><strong>{{ promo.nombre }}</strong></p>
+    <ul>
+      <li>ID: {{ promo.idPromocion }}</li>
+      <li>Tipo: {{ promo.tipoPromocion }}</li>
+      <li>Descuento: {{ promo.descuentoResidencial * 100 }}%</li>
+      <li>Aplica Nuevos: {{ promo.aplicaNuevos ? 'Sí' : 'No' }}</li>
+      <li>Desde: {{ promo.vigenciaDesde | date:'yyyy-MM-dd' }}</li>
+      <li>Hasta: {{ promo.vigenciaHasta | date:'yyyy-MM-dd' }}</li>
+      <li><strong>Activa:</strong> {{ promo.activa ? 'Sí' : 'No' }}</li>
+    </ul>
+    <button (click)="cambiarEstado(promo.idPromocion, promo.activa)">
+      {{ promo.activa ? 'Desactivar' : 'Activar' }}
+    </button>
+  </div>
+</div>
+
+<div *ngIf="promociones.length === 0">
+  <p>No hay promociones disponibles con el filtro actual.</p>
+</div>

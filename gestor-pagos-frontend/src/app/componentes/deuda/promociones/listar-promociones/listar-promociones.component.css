@@ -1,0 +1,22 @@
+.filtros {
+  display: flex;
+  flex-direction: column;
+  max-width: 300px;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+input, button {
+  padding: 8px;
+  font-size: 14px;
+}
+
+.lista-promos {
+  list-style-type: none;
+  padding: 0;
+}
+
+.lista-promos li {
+  padding: 6px 0;
+  border-bottom: 1px solid #ccc;
+}

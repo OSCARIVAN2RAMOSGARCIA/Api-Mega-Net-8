@@ -1,0 +1,51 @@
+<h2>Crear Promoción</h2>
+
+<form (ngSubmit)="crear()">
+  <table>
+    <tr>
+      <td><label for="nombre">Nombre:</label></td>
+      <td><input type="text" [(ngModel)]="nuevaPromocion.nombre" name="nombre" id="nombre" required /></td>
+    </tr>
+    <tr>
+      <td><label for="descuentoRes">Descuento Residencial (%):</label></td>
+      <td><input type="number" [(ngModel)]="nuevaPromocion.descuentoResidencial" name="descuentoRes" id="descuentoRes" step="0.01" /></td>
+    </tr>
+    <tr>
+      <td><label for="descuentoEmp">Descuento Empresarial (%):</label></td>
+      <td><input type="number" [(ngModel)]="nuevaPromocion.descuentoEmpresarial" name="descuentoEmp" id="descuentoEmp" step="0.01" /></td>
+    </tr>
+    <tr>
+      <td><label for="aplicaNuevos">Aplica Nuevos:</label></td>
+      <td><input type="checkbox" [(ngModel)]="nuevaPromocion.aplicaNuevos" name="aplicaNuevos" id="aplicaNuevos" /></td>
+    </tr>
+    <tr>
+      <td><label for="tipoPromocion">Tipo Promoción:</label></td>
+      <td>
+        <select [(ngModel)]="nuevaPromocion.tipoPromocion" name="tipoPromocion" id="tipoPromocion" required>
+          <option value="">Seleccionar tipo</option>
+          <option value="Residencial">Residencial</option>
+          <option value="Empresarial">Empresarial</option>
+          <option value="Ambos">Ambos</option>
+        </select>
+      </td>
+    </tr>
+    <tr>
+      <td><label for="desde">Vigencia Desde:</label></td>
+      <td><input type="date" [(ngModel)]="nuevaPromocion.vigenciaDesde" name="desde" id="desde" required /></td>
+    </tr>
+    <tr>
+      <td><label for="hasta">Vigencia Hasta:</label></td>
+      <td><input type="date" [(ngModel)]="nuevaPromocion.vigenciaHasta" name="hasta" id="hasta" required /></td>
+    </tr>
+    <tr>
+      <td><label for="activa">Activa:</label></td>
+      <td><input type="checkbox" [(ngModel)]="nuevaPromocion.activa" name="activa" id="activa" /></td>
+    </tr>
+    <tr>
+      <td colspan="2" style="text-align:center;"><button type="submit">Crear</button></td>
+    </tr>
+  </table>
+</form>
+
+
+
