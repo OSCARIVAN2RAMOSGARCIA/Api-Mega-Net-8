@@ -1,7 +1,7 @@
-CREATE DATABASE MegaDeuda;
+CREATE DATABASE GestionDeudas;
 GO
 
-USE MegaDeuda;
+USE GestionDeudas;
 GO
 
 -- Tablas básicas de ubicación
