@@ -21,6 +21,10 @@ html {
     box-sizing: inherit;
 }
 
+p {
+    margin: 0;
+}
+
 header {
     background-color: var(--primary-color);
 }
@@ -59,7 +63,6 @@ a {
 
 main {
     padding: 2rem;
-    width: 100rem;
     margin: 0 auto;
 }
 
@@ -67,6 +70,11 @@ main {
 h2 {
     font-size: 2.5rem;
     color: var(--black);
+}
+
+.listado {
+    width: 100rem;
+    margin: 0 auto;
 }
 
 form {
@@ -98,7 +106,7 @@ select {
     border-radius: .4rem;
 }
 
-.promocion-form button {
+button {
     border: none;
     padding: 0 1.5rem;
     font-size: 1.6rem;
@@ -107,8 +115,9 @@ select {
     /* height: 3.35rem; */
     width: 12rem;
     border-radius: .4rem;
-    flex-direction: row;
     padding: 1rem;
+    background-color: var(--grey);
+    text-align: center;
 }
 
 .promo-btns {
@@ -138,10 +147,15 @@ h3 {
 }
 
 table {
-    width: 100%;
-    margin-top: 4rem;
+    width: 95%;
+    margin: 4rem auto 0 auto;
     border: 1px;
     border-collapse: collapse;
+}
+
+.bg-table {
+    background-color: var(--black);
+    color: var(--white);
 }
 
 table,
@@ -149,7 +163,7 @@ td,
 th {
     border: 1px solid;
     padding: 1rem;
-
+    border: none;
 }
 
 th {
@@ -158,6 +172,25 @@ th {
 
 td {
     font-size: 1.6rem;
+}
+
+th,
+td {
+    border-bottom: 1px solid #ccc;
+    /* solo línea abajo */
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    padding: 8px;
+    text-align: left;
+}
+
+.ancho-desc {
+    width: 8rem;
+}
+
+.ancho-fecha {
+    width: 15rem;
 }
 
 /* modal */
@@ -185,9 +218,9 @@ td {
 .modal-content {
     background-color: #181818;
     background-color: var(--white);
-    padding: 25px;
-    border-radius: 8px;
-    max-width: 500px;
+    padding: 2.5rem;
+    border-radius: .8rem;
+    max-width: 55rem;
     width: 90%;
     position: relative;
 }
@@ -214,6 +247,7 @@ td {
     font-size: 1.5rem;
     color: var(--grey);
     font-weight: bold;
+    margin-bottom: 1rem;
 }
 
 .radioLabel {
@@ -231,7 +265,6 @@ td {
     display: flex;
     gap: 15px;
     margin-top: 20px;
-    justify-content: flex-end;
     font-size: 1.6rem;
 }
 
@@ -256,3 +289,134 @@ td {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
 }
+
+/* deuda */
+
+.deuda {
+    max-width: 70rem;
+    margin: 0 auto;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.title-center {
+    text-align: center;
+}
+
+.form-deuda {
+    display: flex;
+    /* justify-content: space-between; */
+    justify-content: center;
+    width: 50rem;
+    margin: 3rem auto;
+}
+
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+.sub-card {
+    width: 50rem;
+    border: 1px solid var(--primary-color);
+    border-radius: .5rem;
+    margin: 3rem auto;
+    /* padding: 2rem; */
+}
+
+.sub-nombre {
+    font-size: 3rem;
+    background-color: var(--primary-color);
+    padding: 2rem;
+}
+
+.sub-nombre p {
+    text-align: center;
+    color: var(--white);
+}
+
+.sub-id {
+    font-size: 1.5rem;
+    margin-top: 1rem;
+}
+
+.total {
+    background-color: #DADEE1;
+    padding: 2rem;
+    height: 12rem;
+}
+
+.total p {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+.total p:nth-of-type(2) {
+    font-size: 4rem;
+    margin: 0;
+}
+
+.general-info-cont {
+    border-bottom: 1px solid var(--primary-color);
+
+}
+
+.general-info {
+    padding: 2rem;
+    width: 70%;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.field-bold {
+    font-weight: bold;
+    font-size: 1.6rem;
+}
+
+.general-info p {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+}
+
+.general-info span {
+    font-weight: bold;
+}
+
+.promos-title {
+    font-size: 1.6rem;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.grid-promos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    padding: 2rem;
+    width: 70%;
+    margin: 0 auto;
+    border-bottom: 1px solid var(--black);
+}
+
+.grid-promos p {
+    font-size: 1.6rem;
+}
+
+.grid-promos:last-of-type {
+    border-bottom: none;
+}
+
+/* .separator {
+    border-bottom: 1px solid var(--black);
+} */

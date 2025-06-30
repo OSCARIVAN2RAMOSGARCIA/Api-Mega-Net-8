@@ -7,7 +7,7 @@ body {
 }
 
 /* Contenedor principal centrado */
-:host {
+/* :host {
   display: block;
   max-width: 700px;
   margin: 0 auto;
@@ -15,26 +15,26 @@ body {
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-}
+} */
 
 /* Títulos */
-h2, h3, h4 {
+/* h2, h3, h4 {
   color: #333;
   margin-bottom: 15px;
   border-bottom: 1px solid #ddd;
   padding-bottom: 6px;
-}
+} */
 
 /* Input y botón */
-input[type="number"] {
+/* input[type="number"] {
   padding: 10px;
   width: 160px;
   margin-right: 10px;
   border-radius: 5px;
   border: 1px solid #ccc;
-}
+} */
 
-button {
+/* button {
   padding: 10px 20px;
   background-color: #007bff;
   border: none;
@@ -42,7 +42,7 @@ button {
   font-weight: bold;
   border-radius: 5px;
   cursor: pointer;
-}
+} */
 
 button:hover {
   background-color: #0056b3;
@@ -99,4 +99,3 @@ ul li::marker {
     width: 100%;
   }
 }
-

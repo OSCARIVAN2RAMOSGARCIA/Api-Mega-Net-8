@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { PromocionService } from '../../../../servicios/Promocion.service';
-import { ModalComponent } from '../../../modal/modal.component';
+import { ModalComponent } from '../../modal/modal.component';
+import { PromocionService } from '../../../servicios/Promocion.service';
 
 @Component({
   selector: 'app-listar-promociones',
   standalone: true,
   imports: [CommonModule, FormsModule, ModalComponent],
   templateUrl: './listar-promociones.component.html',
-  styleUrls: ['./listar-promociones.component.css']
 })
 export class ListarPromocionesComponent implements OnInit {
   filtro = {

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { PromocionService } from '../../../../servicios/Promocion.service';
+import { PromocionService } from '../../../servicios/Promocion.service';
 
 @Component({
   selector: 'app-cambiar-estado',
@@ -14,7 +14,7 @@ export class CambiarEstadoComponent {
   id: number = 0;
   activa: boolean = true;
 
-  constructor(private service: PromocionService) {}
+  constructor(private service: PromocionService) { }
 
   cambiar() {
     this.service.cambiarEstadoPromocion(this.id, this.activa).subscribe(() => {

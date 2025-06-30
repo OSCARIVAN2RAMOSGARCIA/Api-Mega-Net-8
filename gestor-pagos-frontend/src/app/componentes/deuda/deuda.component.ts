@@ -8,17 +8,17 @@ import { ContratoService } from '../../servicios/contrato.service';
   standalone: true, // ✅Es un componente standalone
   imports: [FormsModule, CommonModule], // ✅ Necesario para ngModel, *ngIf y *ngFor
   templateUrl: './deuda.component.html',
-  styleUrls: ['./deuda.component.css']
 })
 export class DeudaComponent {
-  idSuscriptor: number = 0;
+  idSuscriptor: number | null = null;
   resultado: any;
 
-  constructor(private contratoService: ContratoService) {}
+  constructor(private contratoService: ContratoService) { }
 
   buscar() {
-    this.contratoService.obtenerDeuda(this.idSuscriptor).subscribe((data) => {
-      this.resultado = data;
-    });
+    if (this.idSuscriptor)
+      this.contratoService.obtenerDeuda(this.idSuscriptor).subscribe((data) => {
+        this.resultado = data;
+      });
   }
 }

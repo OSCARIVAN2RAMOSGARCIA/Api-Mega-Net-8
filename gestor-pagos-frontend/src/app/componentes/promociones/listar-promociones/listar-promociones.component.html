@@ -1,7 +1,6 @@
-<h2>Listado de Promociones</h2>
+<div class="listado">
+  <h2>Listado de Promociones</h2>
 
-
-<div>
   <form class="promocion-form" action="">
     <div class="field">
       <label for="ciudad">Ciudad</label>
@@ -31,30 +30,47 @@
   </form>
 </div>
 
-<h3>Resultados:</h3>
+<!-- <h3>Resultados:</h3> -->
 <table>
-  <tr>
-    <th>Promoción</th>
-    <th>Tipo</th>
-    <th>Descuento</th>
-    <th>Aplica Nuevos</th>
-    <th>Desde</th>
-    <th>Hasta</th>
-    <th>Activa</th>
-    <th>Función</th>
-  </tr>
-  <tr>
-    <td>Promo 10%</td>
-    <td>Residencial</td>
-    <td>10%</td>
-    <td>Sí</td>
-    <td>2024-01-01</td>
-    <td>2025-12-31</td>
-    <td>Sí</td>
-    <td><button>Activar</button></td>
-  </tr>
+  <thead class="bg-table">
+    <tr>
+      <th>Promoción</th>
+      <th>Tipo</th>
+      <th>Descuento Residencial</th>
+      <th>Descuento Empresarial</th>
+      <th>Aplica Nuevos</th>
+      <th>Desde</th>
+      <th>Hasta</th>
+      <th>Activa</th>
+      <th>Función</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- <tr>
+      <td>Promo 10%</td>
+      <td>Residencial</td>
+      <td>10%</td>
+      <td>10%</td>
+      <td>Sí</td>
+      <td>2024-01-01</td>
+      <td>2025-12-31</td>
+      <td>Sí</td>
+      <td><button>Activar</button></td>
+    </tr> -->
+    <tr *ngFor="let promo of promociones">
+      <td>{{promo.nombre}}</td>
+      <td>{{promo.tipoPromocion}} </td>
+      <td class="ancho-desc">{{ promo.descuentoResidencial}}%</td>
+      <td class="ancho-desc">{{ promo.descuentoEmpresarial}}%</td>
+      <td>{{promo.aplicaNuevos ? 'Sí' : 'No'}}</td>
+      <td class="ancho-fecha">{{ promo.vigenciaDesde | date:'dd-MM-yyyy' }}</td>
+      <td class="ancho-fecha">{{ promo.vigenciaHasta | date:'dd-MM-yyyy' }}</td>
+      <td>{{ promo.activa ? 'Sí' : 'No' }}</td>
+      <td><button>{{ promo.activa ? 'Desactivar' : 'Activar' }}</button></td>
+    </tr>
+  </tbody>
 </table>
-
+<!-- 
 <div *ngIf="promociones.length > 0">
   <h3>Resultados:</h3>
   <div *ngFor="let promo of promociones" style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
@@ -78,7 +94,7 @@
   <p>No hay promociones disponibles con el filtro actual.</p>
 </div>
 
-
+ -->
 
 @if (isModalOpen) {
 <app-modal [isOpen]="isModalOpen" (close)="closeModal()" />
