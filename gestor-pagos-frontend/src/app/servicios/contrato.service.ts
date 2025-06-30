@@ -7,7 +7,7 @@ import { SuscriptorDeudaDTO } from '../modelos/SuscriptorDeudaDTO';
   providedIn: 'root'
 })
 export class ContratoService {
-  private apiUrl = 'https://localhost:5243/api/contrato';
+  private apiUrl = 'http://localhost:5243/api/contrato';
 
   constructor(private http: HttpClient) {}
 

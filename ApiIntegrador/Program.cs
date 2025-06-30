@@ -4,6 +4,9 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Configuración de CORS
+
+
 // Configurar cadena de conexión
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
@@ -18,15 +21,15 @@ builder.Services.AddScoped<PromocionService>();
 builder.Services.AddControllers();
 
 // Agregar CORS (ejemplo básico, opcional)
-// Program.cs
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowAll", policy =>
-    {
-        policy.AllowAnyOrigin()
-              .AllowAnyMethod()
-              .AllowAnyHeader();
-    });
+    options.AddPolicy("AllowAngularApp",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:4200") // URL de tu app Angular (dev)
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
 });
 
 // Agregar Swagger
@@ -46,7 +49,8 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseCors("AllowAll");
+app.UseCors("AllowAngularApp");
+
 app.UseHttpsRedirection();
 app.UseAuthorization();
 

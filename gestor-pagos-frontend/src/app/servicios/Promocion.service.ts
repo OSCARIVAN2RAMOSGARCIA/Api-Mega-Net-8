@@ -5,7 +5,7 @@ import { CrearPromocionDTO } from '../modelos/CrearPromocionDTO';
 
 @Injectable({ providedIn: 'root' })
 export class PromocionService {
-  private apiUrl = 'https://localhost:5243/api/promociones';
+  private apiUrl = 'http://localhost:5243/api/promociones';
 
   constructor(private http: HttpClient) {}
 
