@@ -1,11 +1,16 @@
-<nav class="nav-bar">
-  <button (click)="irAPromociones()">Promociones</button>
-  <button (click)="irACrear()">Crear</button>
-  <button (click)="irADeuda()">Consultar Deuda</button>
-</nav>
+<header>
+  <nav class="nav-bar">
+    <div>
+      <img src="logo-blanco.png" alt="">
+    </div>
+    <div class="nav-btns">
+      <a [routerLink]="['/promociones']" routerLinkActive="active" (click)="irAPromociones()">Promociones</a>
+      <!-- <a [routerLink]="['/crear']" routerLinkActive="active" (click)="irACrear()">Crear</a> -->
+      <a [routerLink]="['/deuda']" routerLinkActive="active" (click)="irADeuda()">Consultar Deuda</a>
+    </div>
+  </nav>
+</header>
 
-<hr />
-
-<router-outlet></router-outlet>
-
-
+<main>
+  <router-outlet></router-outlet>
+</main>

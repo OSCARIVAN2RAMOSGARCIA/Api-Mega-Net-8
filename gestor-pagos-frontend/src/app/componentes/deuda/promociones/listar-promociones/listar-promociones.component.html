@@ -1,15 +1,59 @@
 <h2>Listado de Promociones</h2>
 
+
 <div>
-<label>Tipo Servicio:
-  <select [(ngModel)]="filtro.tipoServicio">
-    <option value="ambos">Todos</option>
-    <option value="residencial">Residencial</option>
-    <option value="empresarial">Empresarial</option>
-  </select>
-</label>
-<button (click)="listar()">Buscar</button>
+  <form class="promocion-form" action="">
+    <div class="field">
+      <label for="ciudad">Ciudad</label>
+      <input id="ciudad" type="text" name="ciudad">
+    </div>
+    <div class="field">
+      <label for="colonia">Colonia</label>
+      <input id="colonia" type="text" name="colonia">
+    </div>
+    <div class="field">
+      <label for="paquete">Paquete</label>
+      <input id="paquete" type="text" name="paquete">
+    </div>
+    <div class="field">
+      <label>Tipo Servicio</label>
+      <!-- <select [(ngModel)]="filtro.tipoServicio"> -->
+      <select>
+        <option value="ambos">Todos</option>
+        <option value="residencial">Residencial</option>
+        <option value="empresarial">Empresarial</option>
+      </select>
+    </div>
+    <div class="promo-btns">
+      <button class="btn-crear" (click)="openModal()">Crear</button>
+      <button class="btn-buscar" (click)="listar()">Buscar</button>
+    </div>
+  </form>
 </div>
+
+<h3>Resultados:</h3>
+<table>
+  <tr>
+    <th>Promoción</th>
+    <th>Tipo</th>
+    <th>Descuento</th>
+    <th>Aplica Nuevos</th>
+    <th>Desde</th>
+    <th>Hasta</th>
+    <th>Activa</th>
+    <th>Función</th>
+  </tr>
+  <tr>
+    <td>Promo 10%</td>
+    <td>Residencial</td>
+    <td>10%</td>
+    <td>Sí</td>
+    <td>2024-01-01</td>
+    <td>2025-12-31</td>
+    <td>Sí</td>
+    <td><button>Activar</button></td>
+  </tr>
+</table>
 
 <div *ngIf="promociones.length > 0">
   <h3>Resultados:</h3>
@@ -33,3 +77,9 @@
 <div *ngIf="promociones.length === 0">
   <p>No hay promociones disponibles con el filtro actual.</p>
 </div>
+
+
+
+@if (isModalOpen) {
+<app-modal [isOpen]="isModalOpen" (close)="closeModal()" />
+}

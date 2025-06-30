@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule],
+  imports: [RouterOutlet, CommonModule, RouterLink, RouterLinkActive],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
@@ -14,7 +14,7 @@ export class AppComponent {
   title(title: any) {
     throw new Error('Method not implemented.');
   }
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   irAPromociones() {
     this.router.navigate(['/promociones']);
@@ -25,7 +25,7 @@ export class AppComponent {
   }
 
   irADeuda() {
-  this.router.navigate(['/deuda']);
-}
+    this.router.navigate(['/deuda']);
+  }
 }
 

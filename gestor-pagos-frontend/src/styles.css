@@ -1,1 +1,258 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+    --primary-color: #2D3047;
+    --yellow: #FCD016;
+    --white: #ffffff;
+    --black: #1F2023;
+    --blue: #0C6DFD;
+    --green: #198753;
+    --grey: #666666;
+}
+
+html {
+    box-sizing: border-box;
+    font-size: 62.5%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+header {
+    background-color: var(--primary-color);
+}
+
+.nav-bar {
+    display: flex;
+    width: 110rem;
+    margin: 0 auto;
+    align-items: center;
+    gap: 25rem;
+    padding: 1rem 0;
+}
+
+.nav-btns {
+    display: flex;
+    gap: 2rem;
+}
+
+nav a.active {
+    color: var(--yellow);
+}
+
+a {
+    text-decoration: none;
+}
+
+a:visited {
+    color: var(--white);
+}
+
+a {
+    /* font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; */
+    font-size: 1.8rem;
+    color: var(--white);
+}
+
+main {
+    padding: 2rem;
+    width: 100rem;
+    margin: 0 auto;
+}
+
+
+h2 {
+    font-size: 2.5rem;
+    color: var(--black);
+}
+
+form {
+    display: flex;
+    gap: 2rem;
+    /* align-items: center; */
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    width: 19rem;
+    justify-content: space-between;
+}
+
+label {
+    font-weight: bold;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    /* color: var(--primary-color); */
+    color: var(--grey);
+}
+
+input,
+select {
+    font-size: 1.6rem;
+    padding: .5rem 1rem;
+    border: .1rem solid var(--primary-color);
+    border-radius: .4rem;
+}
+
+.promocion-form button {
+    border: none;
+    padding: 0 1.5rem;
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: var(--white);
+    /* height: 3.35rem; */
+    width: 12rem;
+    border-radius: .4rem;
+    flex-direction: row;
+    padding: 1rem;
+}
+
+.promo-btns {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.btn-crear {
+    background-color: var(--green);
+}
+
+.btn-crear:hover {
+    background-color: #226d4a;
+}
+
+.btn-buscar {
+    background-color: var(--blue);
+}
+
+.btn-buscar:hover {
+    background-color: #235eb7;
+}
+
+h3 {
+    font-size: 1.6rem;
+}
+
+table {
+    width: 100%;
+    margin-top: 4rem;
+    border: 1px;
+    border-collapse: collapse;
+}
+
+table,
+td,
+th {
+    border: 1px solid;
+    padding: 1rem;
+
+}
+
+th {
+    font-size: 1.8rem;
+}
+
+td {
+    font-size: 1.6rem;
+}
+
+/* modal */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+
+.modal.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.modal-content {
+    background-color: #181818;
+    background-color: var(--white);
+    padding: 25px;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 90%;
+    position: relative;
+}
+
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: var(--black);
+    font-size: 1.5rem;
+    cursor: pointer;
+    font-size: 3rem;
+}
+
+.modal-title {
+    font-size: 1.8rem;
+    margin-bottom: 15px;
+    color: var(--black);
+}
+
+.modal p {
+    font-size: 1.5rem;
+    color: var(--grey);
+    font-weight: bold;
+}
+
+.radioLabel {
+    font-weight: normal;
+    margin-left: 1rem;
+    color: var(--black);
+}
+
+#modal-message {
+    color: var(--white-color);
+    font-size: 1.4rem;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    justify-content: flex-end;
+    font-size: 1.6rem;
+}
+
+.confirm-btn {
+    padding: 10px 20px;
+    border: none;
+    background-color: var(--blue);
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    color: white;
+
+}
+
+
+.cancel {
+    background-color: #333;
+    color: white;
+}
+
+.modal form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}

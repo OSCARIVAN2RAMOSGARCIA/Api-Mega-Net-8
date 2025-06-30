@@ -6,5 +6,5 @@ export interface CrearPromocionDTO {
   tipoPromocion: string;
   vigenciaDesde: string;
   vigenciaHasta: string;
-  activa: boolean;
+  activa: boolean | null;
 }

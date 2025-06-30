@@ -7,7 +7,7 @@ import { DeudaComponent } from './componentes/deuda/deuda.component';
 export const routes: Routes = [
   { path: '', redirectTo: 'promociones', pathMatch: 'full' },
   { path: 'promociones', component: ListarPromocionesComponent },
-  { path: 'crear', component: CrearPromocionComponent },
+  // { path: 'crear', component: CrearPromocionComponent },
   { path: 'estado', component: CambiarEstadoComponent },
   { path: 'deuda', component: DeudaComponent }
 ];
