@@ -1,26 +1,33 @@
-using ApiIntegrador.Data; // cambia por el namespace correcto
-using Microsoft.Extensions.DependencyInjection;
-using ApiIntegrador.Controllers;
-using ApiIntegrador.Dto;
-using System.Reflection;
-using AutoMapper;
+using ApiIntegrador.Data;
 using ApiIntegrador.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configurar cadena de conexión (ajústala a tu entorno)
+// Configurar cadena de conexión
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-// Agregar DbContext
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 // Agregar servicios personalizados
 builder.Services.AddScoped<ContratoService>();
+builder.Services.AddScoped<PromocionService>();
 
 // Agregar controladores
 builder.Services.AddControllers();
+
+// Agregar CORS (ejemplo básico, opcional)
+// Program.cs
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
+});
 
 // Agregar Swagger
 builder.Services.AddEndpointsApiExplorer();
@@ -28,16 +35,21 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Middleware de desarrollo
+// Middleware
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "ApiIntegrador v1");
+        c.RoutePrefix = "swagger";
+    });
 }
 
-// Middleware de seguridad y ruteo
+app.UseCors("AllowAll");
 app.UseHttpsRedirection();
 app.UseAuthorization();
+
 app.MapControllers();
 
 app.Run();
