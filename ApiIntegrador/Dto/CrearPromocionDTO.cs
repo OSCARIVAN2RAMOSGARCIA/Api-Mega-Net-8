@@ -10,5 +10,6 @@ namespace ApiIntegrador.Dto
         public DateTime VigenciaDesde { get; set; }
         public DateTime VigenciaHasta { get; set; }
         public bool Activa { get; set; } = true;
+        public int? IdCiudad { get; set; } 
     }
 }

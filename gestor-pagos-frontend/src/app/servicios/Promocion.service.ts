@@ -13,14 +13,24 @@ export class PromocionService {
     return this.http.post(`${this.apiUrl}`, dto);
   }
 
-listarPromociones(ciudad?: string, colonia?: string, paqueteId?: number, tipoServicio?: string): Observable<any[]> {
+// En tu servicio
+listarPromociones(
+  ciudad?: string, 
+  colonia?: string, 
+  paqueteId?: number, 
+  tipoServicio?: string
+): Observable<any[]> {
   let params = new HttpParams();
-  if (ciudad) params = params.set('ciudad', ciudad);
-  if (colonia) params = params.set('colonia', colonia);
-  if (paqueteId !== undefined) params = params.set('paqueteId', paqueteId);
-  if (tipoServicio) params = params.set('tipoServicio', tipoServicio);
-  console.log(params)
+  
+  // Solo agregamos los parámetros que tienen valor
+  if (ciudad && ciudad.trim()) params = params.set('ciudad', ciudad.trim());
+  if (colonia !== undefined) params = params.set('colonia', colonia.trim());
+  if (paqueteId !== undefined) params = params.set('paqueteId', paqueteId.toString());
+  if (tipoServicio && tipoServicio.trim()) params = params.set('tipoServicio', tipoServicio.trim());
+  console.log(this.http.get<any[]>(this.apiUrl, { params }))
+  
   return this.http.get<any[]>(this.apiUrl, { params });
+  
 }
 
 cambiarEstadoPromocion(id: number, activa: boolean): Observable<any> {

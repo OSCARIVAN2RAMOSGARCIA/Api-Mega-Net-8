@@ -14,10 +14,11 @@ export class ListarPromocionesComponent implements OnInit {
   filtro = {
     tipoServicio: 'ambos'
   };
-  ciudad = '';
-  colonia = '';
-  promociones: any[] = [];
+  ciudad: string = '';
+  colonia: string = '';
+
   loading = false;
+  promociones: any[] = [];
   changingStates: {[id: number]: boolean} = {}; // Para rastrear estados cambiantes
 
   isModalOpen = false;
@@ -34,22 +35,30 @@ export class ListarPromocionesComponent implements OnInit {
 
   listar() {
     this.loading = true;
-    const tipo = this.filtro.tipoServicio === 'ambos' ? '' : this.filtro.tipoServicio;
     
-    this.service.listarPromociones(this.ciudad, this.colonia, undefined, tipo)
+    console.log('Filtros aplicados:', {
+      ciudad: this.ciudad,
+      colonia: this.colonia,
+      tipoServicio: this.filtro.tipoServicio
+    });
+  
+    const tipoServicio = this.filtro.tipoServicio === 'ambos' ? undefined : this.filtro.tipoServicio;
+    const ciudad = this.ciudad?.trim() || undefined;
+    const colonia = this.colonia?.trim() || undefined;
+  
+    this.service.listarPromociones(ciudad, colonia, undefined, tipoServicio)
       .subscribe({
         next: (data) => {
+          console.log('Datos recibidos:', data);
           this.promociones = data;
           this.loading = false;
         },
         error: (err) => {
           console.error('Error al listar promociones:', err);
           this.loading = false;
-          alert('Ocurrió un error al cargar las promociones');
         }
       });
   }
-
   cambiarEstado(id: number, estadoActual: boolean) {
     const nuevoEstado = !estadoActual;
     this.changingStates[id] = true; // Marcar que esta promoción está cambiando
