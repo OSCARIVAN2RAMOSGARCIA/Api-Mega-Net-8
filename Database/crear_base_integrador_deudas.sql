@@ -184,3 +184,31 @@ INSERT INTO PromocionesAplicadas (IdContrato, IdPromocion, IdPromocionConfigurac
 (3, 1, NULL, '2024-05-20', 0.10), -- + promo adicional 10%
 (4, 5, 9, '2024-07-25', 0.00),   -- Sofía sin descuento
 (5, 4, 4, '2024-08-10', 0.05);   -- Logística ABC 5%
+
+-- 2. Promoción "Elite Providencia" (Colonia Providencia - Guadalajara)
+INSERT INTO Promociones (Nombre, DescuentoResidencial, DescuentoEmpresarial, AplicaNuevos, TipoPromocion, VigenciaDesde, VigenciaHasta, Activa)
+VALUES ('Elite Providencia', 0.25, 0.00, 1, 'Residencial', '2024-09-01', '2024-11-30', 1);
+
+INSERT INTO PromocionConfiguracion (IdPromocion, IdCiudad, IdColonia, IdPaquete)
+VALUES (SCOPE_IDENTITY(), 2, 3, NULL);
+
+-- 3. Promoción "Norte Digital" (Monterrey)
+INSERT INTO Promociones (Nombre, DescuentoResidencial, DescuentoEmpresarial, AplicaNuevos, TipoPromocion, VigenciaDesde, VigenciaHasta, Activa)
+VALUES ('Norte Digital', 0.12, 0.18, 1, 'Ambos', '2024-10-01', '2025-01-31', 1);
+
+INSERT INTO PromocionConfiguracion (IdPromocion, IdCiudad, IdColonia, IdPaquete)
+VALUES (SCOPE_IDENTITY(), 3, NULL, NULL);
+
+-- 4. Promoción "Angelópolis Premium" (Colonia Angelópolis - Puebla)
+INSERT INTO Promociones (Nombre, DescuentoResidencial, DescuentoEmpresarial, AplicaNuevos, TipoPromocion, VigenciaDesde, VigenciaHasta, Activa)
+VALUES ('Angelópolis Premium', 0.00, 0.20, 1, 'Empresarial', '2024-09-15', '2024-12-15', 1);
+
+INSERT INTO PromocionConfiguracion (IdPromocion, IdCiudad, IdColonia, IdPaquete)
+VALUES (SCOPE_IDENTITY(), 4, 5, NULL);
+
+-- 5. Promoción "Frontera Plus" (Tijuana)
+INSERT INTO Promociones (Nombre, DescuentoResidencial, DescuentoEmpresarial, AplicaNuevos, TipoPromocion, VigenciaDesde, VigenciaHasta, Activa)
+VALUES ('Frontera Plus', 0.18, 0.12, 1, 'Ambos', '2024-10-01', '2025-02-28', 1);
+
+INSERT INTO PromocionConfiguracion (IdPromocion, IdCiudad, IdColonia, IdPaquete)
+VALUES (SCOPE_IDENTITY(), 5, NULL, NULL);
