@@ -16,10 +16,5 @@ export class CambiarEstadoComponent {
 
   constructor(private service: PromocionService) { }
 
-  cambiar() {
-    this.service.cambiarEstadoPromocion(this.id, this.activa).subscribe(() => {
-      alert('Estado cambiado correctamente');
-    });
-  }
 }
 
