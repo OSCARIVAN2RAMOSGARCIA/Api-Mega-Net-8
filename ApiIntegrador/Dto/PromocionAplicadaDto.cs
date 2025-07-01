@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 namespace ApiIntegrador.Dto
 {
-// PromocionAplicadaDTOs
 public class PromocionAplicadaDTO
 {
     public int IdPromocionAplicada { get; set; }

@@ -45,7 +45,7 @@
           <p class=" field-bold">Nombre:</p>
           <p>{{ promo.nombre }}</p>
           <p class="field-bold">Descuento aplicado:</p>
-          <p>{{ promo.descuentoAplicado }}</p>
+          <p>- ${{ promo.descuentoAplicado*resultado?.contratos[0].precioOriginal | number:'1.2-2' }}</p>
           <p class="field-bold">Fecha de inicio:</p>
           <p>{{ promo.fechaInicio | date:'dd-MM-yyyy' }}</p>
           <p class="field-bold">Fecha de terminación:</p>
@@ -55,32 +55,6 @@
         </div>
 
       </div>
-
-      <!-- <p><strong>Nombre:</strong> {{ resultado?.nombre }}</p> -->
-      <!-- <p><strong>Colonia:</strong> {{ resultado?.colonia }}</p>
-      <p><strong>Ciudad:</strong> {{ resultado?.ciudad }}</p>
-      <p><strong>Deuda Total:</strong> ${{ resultado?.deudaTotal }}</p> -->
-
-      <!-- <h4>Contratos:</h4> -->
-      <!-- <div *ngFor="let contrato of resultado?.contratos">
-        <p><strong>Contrato #{{ contrato.idContrato }}</strong></p>
-        <ul>
-          <li>Paquete: {{ contrato.paquete }}</li>
-          <li>Tipo: {{ contrato.tipoContrato }}</li>
-          <li>Precio: ${{ contrato.precioOriginal }}</li>
-          <li>Descuento: ${{ contrato.descuentoTotal }}</li>
-          <li>Total a pagar: ${{ contrato.totalAPagar }}</li>
-        </ul>
-        <p><strong>Promociones aplicadas:</strong></p>
-        <ul>
-          <li *ngFor="let promo of contrato.promociones">
-            {{ promo.nombre }} - Descuento: {{ promo.descuentoAplicado }} ({{ promo.fechaInicio | date:'yyyy-MM-dd' }} a
-            {{
-            promo.fechaFin | date:'yyyy-MM-dd' }}, {{ promo.diasDuracion }} días)
-          </li>
-        </ul>
-      </div> -->
-
-    </div> <!-- cierre <div class="sub-card"> -->
-  </div> <!-- cierre <div *ngIf="resultado"> -->
-</div> <!-- cierre <div class="deuda"> -->
+    </div> 
+  </div> 
+</div> 

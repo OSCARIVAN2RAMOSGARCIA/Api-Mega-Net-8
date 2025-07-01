@@ -14,10 +14,12 @@ export class ListarPromocionesComponent implements OnInit {
   filtro = {
     tipoServicio: 'ambos'
   };
-
+  ciudad = '';
+  colonia = '';
   promociones: any[] = [];
+  loading = false;
+  changingStates: {[id: number]: boolean} = {}; // Para rastrear estados cambiantes
 
-  // modalOpen = false;
   isModalOpen = false;
   active = false;
   modalTitle = '';
@@ -31,34 +33,45 @@ export class ListarPromocionesComponent implements OnInit {
   }
 
   listar() {
-    const { tipoServicio } = this.filtro;
-    const tipo = tipoServicio === 'ambos' ? '' : tipoServicio;
-
-    this.service.listarPromociones('', '', undefined, tipo)
-      .subscribe((data) => {
-        this.promociones = data.filter(promo => {
-          if (tipoServicio === 'ambos') return true;
-          return promo.tipoPromocion?.toLowerCase() === tipoServicio.toLowerCase();
-        });
+    this.loading = true;
+    const tipo = this.filtro.tipoServicio === 'ambos' ? '' : this.filtro.tipoServicio;
+    
+    this.service.listarPromociones(this.ciudad, this.colonia, undefined, tipo)
+      .subscribe({
+        next: (data) => {
+          this.promociones = data;
+          this.loading = false;
+        },
+        error: (err) => {
+          console.error('Error al listar promociones:', err);
+          this.loading = false;
+          alert('Ocurrió un error al cargar las promociones');
+        }
       });
   }
 
   cambiarEstado(id: number, estadoActual: boolean) {
     const nuevoEstado = !estadoActual;
+    this.changingStates[id] = true; // Marcar que esta promoción está cambiando
+    
     this.service.cambiarEstadoPromocion(id, nuevoEstado).subscribe({
-      next: () => this.listar(),
+      next: () => {
+        // Actualizar el estado localmente sin recargar toda la lista
+        const promoIndex = this.promociones.findIndex(p => p.idPromocion === id);
+        if (promoIndex !== -1) {
+          this.promociones[promoIndex].activa = nuevoEstado;
+        }
+        this.changingStates[id] = false;
+      },
       error: (err) => {
         console.error('Error al cambiar estado:', err);
+        this.changingStates[id] = false;
         alert('Ocurrió un error al cambiar el estado.');
       }
     });
   }
 
-  // toggleModal() {
-  //   this.modalOpen = true;
-  // }
   openModal() {
-
     this.isModalOpen = true;
     this.active = true;
   }
@@ -66,10 +79,4 @@ export class ListarPromocionesComponent implements OnInit {
   closeModal() {
     this.isModalOpen = false;
   }
-
-  // handleConfirm() {
-  //   alert(`Enviado!!`);
-  //   this.closeModal();
-  // }
 }
-

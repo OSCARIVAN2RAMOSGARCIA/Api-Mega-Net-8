@@ -19,12 +19,12 @@ listarPromociones(ciudad?: string, colonia?: string, paqueteId?: number, tipoSer
   if (colonia) params = params.set('colonia', colonia);
   if (paqueteId !== undefined) params = params.set('paqueteId', paqueteId);
   if (tipoServicio) params = params.set('tipoServicio', tipoServicio);
-
+  console.log(params)
   return this.http.get<any[]>(this.apiUrl, { params });
 }
 
 cambiarEstadoPromocion(id: number, activa: boolean): Observable<any> {
-  return this.http.put(`https://localhost:5243/api/promociones/${id}/estado?activa=${activa}`, {});
+  return this.http.put(`http://localhost:5243/api/promociones/${id}/estado?activa=${activa}`, {});
 }
 
 }

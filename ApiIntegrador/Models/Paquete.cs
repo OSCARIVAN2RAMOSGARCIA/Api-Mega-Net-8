@@ -3,9 +3,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ApiIntegrador.Models
 {
-// Paquetes
 public class Paquete
-{   [Key] // 👈 CLAVE PRIMARIA
+{   [Key] 
     public int IdPaquete { get; set; }
     public string Nombre { get; set; } = string.Empty;
     public string TipoPaquete { get; set; } = string.Empty; // "Residencial", "Empresarial"

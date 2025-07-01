@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 namespace ApiIntegrador.Dto
 {
-// ContratoDTOs
+
 public class ContratoDTO
 {
     public int IdContrato { get; set; }
@@ -10,7 +10,7 @@ public class ContratoDTO
     public DateTime FechaInicio { get; set; }
     public DateTime? FechaTermino { get; set; }
     public bool Activo { get; set; }
-    public string TipoContrato { get; set; } = string.Empty; // "Residencial", "Empresarial"
+    public string TipoContrato { get; set; } = string.Empty; 
 }
 
 }

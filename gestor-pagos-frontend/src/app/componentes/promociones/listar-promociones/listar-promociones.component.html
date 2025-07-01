@@ -4,20 +4,15 @@
   <form class="promocion-form" action="">
     <div class="field">
       <label for="ciudad">Ciudad</label>
-      <input id="ciudad" type="text" name="ciudad">
+      <input [(ngModel)]="ciudad" name="ciudad" id="ciudad" type="text">
     </div>
     <div class="field">
       <label for="colonia">Colonia</label>
-      <input id="colonia" type="text" name="colonia">
-    </div>
-    <div class="field">
-      <label for="paquete">Paquete</label>
-      <input id="paquete" type="text" name="paquete">
+      <input [(ngModel)]="colonia" id="colonia" type="text" name="colonia">
     </div>
     <div class="field">
       <label>Tipo Servicio</label>
-      <!-- <select [(ngModel)]="filtro.tipoServicio"> -->
-      <select>
+      <select [(ngModel)]="filtro.tipoServicio" name="tipoServicio">
         <option value="ambos">Todos</option>
         <option value="residencial">Residencial</option>
         <option value="empresarial">Empresarial</option>
@@ -25,13 +20,18 @@
     </div>
     <div class="promo-btns">
       <button class="btn-crear" (click)="openModal()">Crear</button>
-      <button class="btn-buscar" (click)="listar()">Buscar</button>
+      <button class="btn-buscar" (click)="listar()" [disabled]="loading">
+        {{ loading ? 'Buscando...' : 'Buscar' }}
+      </button>
     </div>
   </form>
 </div>
 
-<!-- <h3>Resultados:</h3> -->
-<table>
+<div *ngIf="loading && promociones.length === 0" class="loading-message">
+  Cargando promociones...
+</div>
+
+<table *ngIf="!loading || promociones.length > 0">
   <thead class="bg-table">
     <tr>
       <th>Promoción</th>
@@ -46,56 +46,34 @@
     </tr>
   </thead>
   <tbody>
-    <!-- <tr>
-      <td>Promo 10%</td>
-      <td>Residencial</td>
-      <td>10%</td>
-      <td>10%</td>
-      <td>Sí</td>
-      <td>2024-01-01</td>
-      <td>2025-12-31</td>
-      <td>Sí</td>
-      <td><button>Activar</button></td>
-    </tr> -->
     <tr *ngFor="let promo of promociones">
       <td>{{promo.nombre}}</td>
-      <td>{{promo.tipoPromocion}} </td>
-      <td class="ancho-desc">{{ promo.descuentoResidencial}}%</td>
-      <td class="ancho-desc">{{ promo.descuentoEmpresarial}}%</td>
+      <td>{{promo.tipoPromocion}}</td>
+      <td class="ancho-desc">{{ promo.descuentoResidencial*100}}%</td>
+      <td class="ancho-desc">{{ promo.descuentoEmpresarial*100}}%</td>
       <td>{{promo.aplicaNuevos ? 'Sí' : 'No'}}</td>
       <td class="ancho-fecha">{{ promo.vigenciaDesde | date:'dd-MM-yyyy' }}</td>
       <td class="ancho-fecha">{{ promo.vigenciaHasta | date:'dd-MM-yyyy' }}</td>
       <td>{{ promo.activa ? 'Sí' : 'No' }}</td>
-      <td><button>{{ promo.activa ? 'Desactivar' : 'Activar' }}</button></td>
+      <td>
+        <button 
+          (click)="cambiarEstado(promo.idPromocion, promo.activa)"
+          [disabled]="changingStates[promo.idPromocion]"
+        >
+          <span *ngIf="!changingStates[promo.idPromocion]">
+            {{ promo.activa ? 'Desactivar' : 'Activar' }}
+          </span>
+          <span *ngIf="changingStates[promo.idPromocion]">Procesando...</span>
+        </button>
+      </td>
     </tr>
   </tbody>
 </table>
-<!-- 
-<div *ngIf="promociones.length > 0">
-  <h3>Resultados:</h3>
-  <div *ngFor="let promo of promociones" style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
-    <p><strong>{{ promo.nombre }}</strong></p>
-    <ul>
-      <li>ID: {{ promo.idPromocion }}</li>
-      <li>Tipo: {{ promo.tipoPromocion }}</li>
-      <li>Descuento: {{ promo.descuentoResidencial * 100 }}%</li>
-      <li>Aplica Nuevos: {{ promo.aplicaNuevos ? 'Sí' : 'No' }}</li>
-      <li>Desde: {{ promo.vigenciaDesde | date:'yyyy-MM-dd' }}</li>
-      <li>Hasta: {{ promo.vigenciaHasta | date:'yyyy-MM-dd' }}</li>
-      <li><strong>Activa:</strong> {{ promo.activa ? 'Sí' : 'No' }}</li>
-    </ul>
-    <button (click)="cambiarEstado(promo.idPromocion, promo.activa)">
-      {{ promo.activa ? 'Desactivar' : 'Activar' }}
-    </button>
-  </div>
-</div>
 
-<div *ngIf="promociones.length === 0">
-  <p>No hay promociones disponibles con el filtro actual.</p>
+<div *ngIf="!loading && promociones.length === 0" class="no-results">
+  No se encontraron promociones con los filtros actuales.
 </div>
-
- -->
 
 @if (isModalOpen) {
-<app-modal [isOpen]="isModalOpen" (close)="closeModal()" />
+  <app-modal [isOpen]="isModalOpen" (close)="closeModal()" />
 }

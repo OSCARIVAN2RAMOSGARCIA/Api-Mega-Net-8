@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace ApiIntegrador.Models
 {
 public class Suscriptor
-{   [Key] // 👈 CLAVE PRIMARIA
+{   [Key] 
     public int IdSuscriptor { get; set; }
     public string Nombre { get; set; } = string.Empty;
     public int IdColonia { get; set; }

@@ -33,9 +33,12 @@ export class ModalComponent {
 
   crear() {
     console.log(this.nuevaPromocion);
+    setTimeout(() => {
+      this.close.emit();
+    }, 1000);
     this.service.crearPromocion(this.nuevaPromocion).subscribe(() => {
       alert('Promoción creada correctamente');
-
+      
       // Limpiar formulario:
       this.nuevaPromocion = {
         nombre: '',

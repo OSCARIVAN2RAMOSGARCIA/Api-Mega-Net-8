@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace ApiIntegrador.Models
 {
     public class PromocionConfiguracion
-    {   [Key] // 👈 CLAVE PRIMARIA
+    {   [Key] 
         public int IdPromocionConfiguracion { get; set; }
         public int IdPromocion { get; set; }
         public int? IdCiudad { get; set; }

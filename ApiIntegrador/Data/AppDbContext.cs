@@ -9,8 +9,6 @@ namespace ApiIntegrador.Data
             : base(options)
         {
         }
-
-        // DbSets
         public DbSet<Ciudad> Ciudades { get; set; }
         public DbSet<Colonia> Colonias { get; set; }
         public DbSet<Servicio> Servicios { get; set; }
@@ -24,9 +22,7 @@ namespace ApiIntegrador.Data
 
 protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
-    // Definir la clave primaria para cada entidad
     modelBuilder.Entity<Ciudad>().HasKey(c => c.IdCiudad);
-
     modelBuilder.Entity<Colonia>().HasKey(c => c.IdColonia);
     modelBuilder.Entity<Colonia>()
         .HasOne(c => c.Ciudad)

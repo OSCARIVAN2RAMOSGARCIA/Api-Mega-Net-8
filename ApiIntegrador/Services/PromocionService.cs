@@ -24,11 +24,6 @@ namespace ApiIntegrador.Services
         if (!string.IsNullOrEmpty(tipoServicio))
             query = query.Where(p => p.TipoPromocion == tipoServicio || p.TipoPromocion == "Ambos");
 
-        // Aquí podrías unir con PromocionesAplicadas -> Contratos -> Suscriptores -> Colonias -> Ciudades
-        // para filtrar por ciudad/colonia/paquete (si la promoción fue aplicada)
-        // o puedes tener una tabla adicional de "PromocionConfiguracion" para que promociones estén
-        // disponibles para ciertas zonas.
-
         return await query.ToListAsync();
     }
 
