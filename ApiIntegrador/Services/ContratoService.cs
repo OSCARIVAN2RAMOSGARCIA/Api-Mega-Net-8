@@ -66,7 +66,7 @@ namespace ApiIntegrador.Services
 
                 foreach (var pa in promocionesValidas)
                 {
-                    var monto = pa.DescuentoAplicado;
+                    var monto = contrato.TipoContrato.ToLower() == "empresarial" ? pa.Promocion.DescuentoEmpresarial : pa.Promocion.DescuentoResidencial;
                     var fechaFin = pa.FechaTermino ?? pa.Promocion.VigenciaHasta;
 
                     if (monto > 0 && monto < 1)

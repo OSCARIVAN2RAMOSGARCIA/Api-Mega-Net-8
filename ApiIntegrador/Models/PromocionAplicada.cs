@@ -11,7 +11,7 @@ namespace ApiIntegrador.Models
         public int? IdPromocionConfiguracion { get; set; }
         public DateTime FechaAplicacion { get; set; }
         public DateTime? FechaTermino { get; set; }
-        public decimal DescuentoAplicado { get; set; }
+        // public decimal DescuentoAplicado { get; set; }
         
         public Contrato Contrato { get; set; } = null!;
         public Promocion Promocion { get; set; } = null!;
