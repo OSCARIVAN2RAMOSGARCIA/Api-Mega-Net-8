@@ -4,7 +4,6 @@ GO
 USE GestionDeudas;
 GO
 
--- Tablas básicas de ubicación
 CREATE TABLE Ciudades (
     IdCiudad INT PRIMARY KEY IDENTITY(1,1),
     Nombre NVARCHAR(100) NOT NULL
@@ -17,7 +16,6 @@ CREATE TABLE Colonias (
     FOREIGN KEY (IdCiudad) REFERENCES Ciudades(IdCiudad)
 );
 
--- Tabla de Servicios con tipo (Empresarial/Residencial)
 CREATE TABLE Servicios (
     IdServicio INT PRIMARY KEY IDENTITY(1,1),
     Nombre NVARCHAR(100) NOT NULL,
@@ -26,7 +24,6 @@ CREATE TABLE Servicios (
     TipoServicio NVARCHAR(20) NOT NULL CHECK (TipoServicio IN ('Residencial', 'Empresarial', 'Ambos'))
 );
 
--- Tabla de Paquetes con tipo
 CREATE TABLE Paquetes (
     IdPaquete INT PRIMARY KEY IDENTITY(1,1),
     Nombre NVARCHAR(100) NOT NULL,
@@ -34,7 +31,6 @@ CREATE TABLE Paquetes (
     Descripcion NVARCHAR(255) NULL
 );
 
--- Relación Paquetes-Servicios
 CREATE TABLE PaqueteServicios (
     IdPaquete INT,
     IdServicio INT,
@@ -43,7 +39,6 @@ CREATE TABLE PaqueteServicios (
     FOREIGN KEY (IdServicio) REFERENCES Servicios(IdServicio)
 );
 
--- Tabla de Clientes con tipo (Empresarial/Residencial)
 CREATE TABLE Suscriptores (
     IdSuscriptor INT PRIMARY KEY IDENTITY(1,1),
     Nombre NVARCHAR(100) NOT NULL,
@@ -52,7 +47,6 @@ CREATE TABLE Suscriptores (
     FOREIGN KEY (IdColonia) REFERENCES Colonias(IdColonia)
 );
 
--- Tabla de Contratos
 CREATE TABLE Contratos (
     IdContrato INT PRIMARY KEY IDENTITY(1,1),
     IdSuscriptor INT NOT NULL,
@@ -65,7 +59,6 @@ CREATE TABLE Contratos (
     FOREIGN KEY (IdPaquete) REFERENCES Paquetes(IdPaquete)
 );
 
--- Tabla de Promociones
 CREATE TABLE Promociones (
     IdPromocion INT PRIMARY KEY IDENTITY(1,1),
     Nombre NVARCHAR(100) NOT NULL,
@@ -90,7 +83,6 @@ CREATE TABLE PromocionConfiguracion (
     FOREIGN KEY (IdPaquete) REFERENCES Paquetes(IdPaquete)
 );
 
--- Registro de promociones aplicadas
 CREATE TABLE PromocionesAplicadas (
     IdPromocionAplicada INT PRIMARY KEY IDENTITY(1,1),
     IdContrato INT NOT NULL,
@@ -98,12 +90,11 @@ CREATE TABLE PromocionesAplicadas (
     IdPromocionConfiguracion INT NULL,
     FechaAplicacion DATE NOT NULL,
     FechaTermino DATE NULL,
-    DescuentoAplicado DECIMAL(5,2) NOT NULL,
     FOREIGN KEY (IdContrato) REFERENCES Contratos(IdContrato),
     FOREIGN KEY (IdPromocion) REFERENCES Promociones(IdPromocion),
     FOREIGN KEY (IdPromocionConfiguracion) REFERENCES PromocionConfiguracion(IdPromocionConfiguracion)
 );
--- Ciudades (5 inserts)
+
 INSERT INTO Ciudades (Nombre) VALUES
 ('Ciudad de México'),
 ('Guadalajara'),
@@ -111,7 +102,6 @@ INSERT INTO Ciudades (Nombre) VALUES
 ('Puebla'),
 ('Tijuana');
 
--- Colonias (5 inserts, relacionados a ciudades)
 INSERT INTO Colonias (IdCiudad, Nombre) VALUES
 (1, 'Polanco'),
 (1, 'Condesa'),
@@ -119,15 +109,13 @@ INSERT INTO Colonias (IdCiudad, Nombre) VALUES
 (3, 'San Pedro'),
 (4, 'Angelópolis');
 
--- Servicios (5 inserts, con tipos y precios)
 INSERT INTO Servicios (Nombre, PrecioResidencial, PrecioEmpresarial, TipoServicio) VALUES
-('Internet 100 Mbps', 650.00, 950.00, 'Ambos'),  -- Precios actualizados para 2024
+('Internet 100 Mbps', 650.00, 950.00, 'Ambos'),
 ('Telefonía Ilimitada', 120.00, 350.00, 'Ambos'),
 ('TV HD Interactiva', 180.00, 450.00, 'Ambos'),
 ('Soporte Técnico 24/7', 0.00, 250.00, 'Empresarial'),
 ('IP Fija Empresarial', 0.00, 550.00, 'Empresarial');
 
--- Paquetes (5 inserts, tipo Residencial o Empresarial)
 INSERT INTO Paquetes (Nombre, TipoPaquete, Descripcion) VALUES
 ('Doble Pack 100 Mbps', 'Residencial', 'Internet + Telefonía'),
 ('Triple Pack 100 Mbps', 'Residencial', 'Internet + Telefonía + TV'),
@@ -135,15 +123,13 @@ INSERT INTO Paquetes (Nombre, TipoPaquete, Descripcion) VALUES
 ('Solo Internet 100 Mbps', 'Residencial', 'Internet solo'),
 ('Soporte Empresarial', 'Empresarial', 'Soporte + IP Fija');
 
--- PaqueteServicios (asignando servicios a paquetes)
 INSERT INTO PaqueteServicios (IdPaquete, IdServicio) VALUES
-(1, 1), (1, 2),              -- Doble Pack 100 Mbps
-(2, 1), (2, 2), (2, 3),      -- Triple Pack 100 Mbps
-(3, 1), (3, 2), (3, 3), (3, 4), -- Full Connected
-(4, 1),                      -- Solo Internet
-(5, 4), (5, 5);              -- Soporte Empresarial
+(1, 1), (1, 2),
+(2, 1), (2, 2), (2, 3),
+(3, 1), (3, 2), (3, 3), (3, 4),
+(4, 1),
+(5, 4), (5, 5);
 
--- Suscriptores (5 inserts, con colonia) - Fechas actualizadas a 2024
 INSERT INTO Suscriptores (Nombre, IdColonia, FechaRegistro) VALUES
 ('Ana García Fernández', 1, '2024-03-15'),
 ('Pedro Ramírez Díaz', 3, '2024-04-22'),
@@ -151,23 +137,20 @@ INSERT INTO Suscriptores (Nombre, IdColonia, FechaRegistro) VALUES
 ('Sofía Castro', 2, '2024-07-18'),
 ('Logística ABC', 4, '2024-08-05');
 
--- Contratos (5 inserts) - Fechas actualizadas a 2024
 INSERT INTO Contratos (IdSuscriptor, IdPaquete, FechaInicio, FechaTermino, TipoContrato, Activo) VALUES
-(1, 2, '2024-03-20', NULL, 'Residencial', 1),  -- Ana, Triple Pack
-(2, 1, '2024-04-25', NULL, 'Residencial', 1),  -- Pedro, Doble Pack
-(3, 3, '2024-05-15', NULL, 'Empresarial', 1),  -- Empresa XYZ
-(4, 4, '2024-07-25', NULL, 'Residencial', 1),  -- Sofía
-(5, 5, '2024-08-10', NULL, 'Empresarial', 1);  -- Logística ABC
+(1, 2, '2024-03-20', NULL, 'Residencial', 1),
+(2, 1, '2024-04-25', NULL, 'Residencial', 1),
+(3, 3, '2024-05-15', NULL, 'Empresarial', 1),
+(4, 4, '2024-07-25', NULL, 'Residencial', 1),
+(5, 5, '2024-08-10', NULL, 'Empresarial', 1);
 
--- Promociones (5 inserts) - Vigencia 2024-2025
 INSERT INTO Promociones (Nombre, DescuentoResidencial, DescuentoEmpresarial, AplicaNuevos, TipoPromocion, VigenciaDesde, VigenciaHasta, Activa) VALUES
 ('Promo Doble 10%', 0.10, 0.00, 1, 'Residencial', '2024-01-01', '2025-12-31', 1),
-('Promo Triple 20%', 0.20, 0.00, 1, 'Residencial', '2024-01-01', '2025-06-30', 1),  -- Promo por tiempo limitado
+('Promo Triple 20%', 0.20, 0.00, 1, 'Residencial', '2024-01-01', '2025-06-30', 1),
 ('Promo Empresarial 15%', 0.00, 0.15, 1, 'Empresarial', '2024-01-01', '2025-12-31', 1),
 ('Bono Domiciliacion 5%', 0.05, 0.05, 0, 'Ambos', '2024-01-01', '2025-12-31', 1),
 ('Sin Descuento', 0.00, 0.00, 0, 'Ambos', '2024-01-01', '2025-12-31', 1);
 
--- PromocionConfiguracion
 INSERT INTO PromocionConfiguracion (IdPromocion, IdCiudad, IdColonia, IdPaquete) VALUES
 (1, NULL, NULL, 1), (2, NULL, NULL, 2), 
 (3, NULL, NULL, 3), (3, NULL, NULL, 5),
@@ -175,38 +158,33 @@ INSERT INTO PromocionConfiguracion (IdPromocion, IdCiudad, IdColonia, IdPaquete)
 (2, 3, NULL, NULL), (3, NULL, 5, NULL),
 (5, NULL, NULL, NULL);
 
--- PromocionesAplicadas - Fechas 2024
-INSERT INTO PromocionesAplicadas (IdContrato, IdPromocion, IdPromocionConfiguracion, FechaAplicacion, DescuentoAplicado) VALUES
-(1, 2, 2, '2024-03-20', 0.20),  -- Ana con 20%
-(1, 4, 4, '2024-03-25', 0.05),   -- + bono 5%
-(2, 1, 1, '2024-04-25', 0.10),   -- Pedro 10%
-(3, 3, 3, '2024-05-15', 0.15),   -- Empresa XYZ 15%
-(3, 1, NULL, '2024-05-20', 0.10), -- + promo adicional 10%
-(4, 5, 9, '2024-07-25', 0.00),   -- Sofía sin descuento
-(5, 4, 4, '2024-08-10', 0.05);   -- Logística ABC 5%
+INSERT INTO PromocionesAplicadas (IdContrato, IdPromocion, IdPromocionConfiguracion, FechaAplicacion) VALUES
+(1, 2, 2, '2024-03-20'),
+(1, 4, 4, '2024-03-25'),
+(2, 1, 1, '2024-04-25'),
+(3, 3, 3, '2024-05-15'),
+(3, 1, NULL, '2024-05-20'),
+(4, 5, 9, '2024-07-25'),
+(5, 4, 4, '2024-08-10');
 
--- 2. Promoción "Elite Providencia" (Colonia Providencia - Guadalajara)
 INSERT INTO Promociones (Nombre, DescuentoResidencial, DescuentoEmpresarial, AplicaNuevos, TipoPromocion, VigenciaDesde, VigenciaHasta, Activa)
 VALUES ('Elite Providencia', 0.25, 0.00, 1, 'Residencial', '2024-09-01', '2024-11-30', 1);
 
 INSERT INTO PromocionConfiguracion (IdPromocion, IdCiudad, IdColonia, IdPaquete)
 VALUES (SCOPE_IDENTITY(), 2, 3, NULL);
 
--- 3. Promoción "Norte Digital" (Monterrey)
 INSERT INTO Promociones (Nombre, DescuentoResidencial, DescuentoEmpresarial, AplicaNuevos, TipoPromocion, VigenciaDesde, VigenciaHasta, Activa)
 VALUES ('Norte Digital', 0.12, 0.18, 1, 'Ambos', '2024-10-01', '2025-01-31', 1);
 
 INSERT INTO PromocionConfiguracion (IdPromocion, IdCiudad, IdColonia, IdPaquete)
 VALUES (SCOPE_IDENTITY(), 3, NULL, NULL);
 
--- 4. Promoción "Angelópolis Premium" (Colonia Angelópolis - Puebla)
 INSERT INTO Promociones (Nombre, DescuentoResidencial, DescuentoEmpresarial, AplicaNuevos, TipoPromocion, VigenciaDesde, VigenciaHasta, Activa)
 VALUES ('Angelópolis Premium', 0.00, 0.20, 1, 'Empresarial', '2024-09-15', '2024-12-15', 1);
 
 INSERT INTO PromocionConfiguracion (IdPromocion, IdCiudad, IdColonia, IdPaquete)
 VALUES (SCOPE_IDENTITY(), 4, 5, NULL);
 
--- 5. Promoción "Frontera Plus" (Tijuana)
 INSERT INTO Promociones (Nombre, DescuentoResidencial, DescuentoEmpresarial, AplicaNuevos, TipoPromocion, VigenciaDesde, VigenciaHasta, Activa)
 VALUES ('Frontera Plus', 0.18, 0.12, 1, 'Ambos', '2024-10-01', '2025-02-28', 1);
 
